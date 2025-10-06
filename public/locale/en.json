@@ -1,0 +1,4 @@
+{
+  "pay_via_razorpay_link": "Pay via Razorpay Link",
+  "razorpay_link_description": "Razorpay Payment Links are URLs that you can send to patients through SMS and email to collect payments from them. Patients can click on the URL, which opens the payment request page, and complete the payment using any of the available payment methods."
+}
