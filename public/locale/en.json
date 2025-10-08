@@ -1,4 +1,12 @@
 {
-  "pay_via_razorpay_link": "Pay via Razorpay Link",
-  "razorpay_link_description": "Razorpay Payment Links are URLs that you can send to patients through SMS and email to collect payments from them. Patients can click on the URL, which opens the payment request page, and complete the payment using any of the available payment methods."
+  "collect_payment_via_razorpay_link": "Collect payment via Razorpay link",
+  "razorpay_link_description": "Razorpay payment links are URLs that you can send to patients through SMS and email to collect payments from them. Patients can click on the URL, which opens the payment request page, and complete the payment using any of the available payment methods.",
+  "notify_via_email": "Notify via email",
+  "notify_via_email_description": "We will send you an email with the payment link.",
+  "enter_email": "Enter email",
+  "generate_payment_link": "Generate payment link",
+  "notify_via_sms": "Notify via SMS",
+  "notify_via_sms_description": "We will send you an SMS with the payment link.",
+  "enter_phone_number": "Enter phone number",
+  "create_payment_link": "Create payment link"
 }

@@ -1,47 +1,19 @@
-import { queryString, request } from "./request";
+import { CreatePaymentLinkBody, PaymentLink } from "@/types/payment_link";
 
-import { FacilityOrganization } from "@/types/organization";
-import { FacilityUser } from "@/types/user";
-import { PaginatedResponse } from "./types";
-import { Role } from "@/types/role";
+import { request } from "./request";
 
 export const apis = {
-  organizations: {
-    list: async (
-      facilityId: string,
-      query?: {
-        limit?: number;
-        offset?: number;
-        parent?: string;
-        level_cache?: number;
-      }
-    ) => {
-      return await request<PaginatedResponse<FacilityOrganization>>(
-        `/api/v1/facility/${facilityId}/organizations/` + queryString(query)
+  payment_links: {
+    get: async (id: string) => {
+      return await request<PaymentLink>(
+        `/api/care_razorpay/payment_link/${id}/`
       );
     },
-
-    users: {
-      list: async (
-        facilityId: string,
-        organizationId: string,
-        query?: {
-          limit?: number;
-          offset?: number;
-          role?: string;
-        }
-      ) => {
-        return await request<PaginatedResponse<FacilityUser>>(
-          `/api/v1/facility/${facilityId}/organizations/${organizationId}/users/` +
-            queryString(query)
-        );
-      },
-    },
-  },
-
-  roles: {
-    list: async () => {
-      return await request<PaginatedResponse<Role>>("/api/v1/role/");
+    create: async (data: CreatePaymentLinkBody) => {
+      return await request<PaymentLink>("/api/care_razorpay/payment_link/", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
     },
   },
 };
