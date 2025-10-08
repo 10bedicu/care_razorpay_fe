@@ -13,12 +13,12 @@ import {
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
-import { DateTimePicker } from "../ui/datetime-picker";
+import { DateTimePicker } from "@/components/ui/datetime-picker";
 import { I18NNAMESPACE } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
 import { Invoice } from "@/types/invoice";
 import { PaymentLink } from "@/types/payment_link";
-import { PhoneInput } from "../ui/phone-input";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { Switch } from "@/components/ui/switch";
 import { apis } from "@/apis";
 import { toast } from "sonner";

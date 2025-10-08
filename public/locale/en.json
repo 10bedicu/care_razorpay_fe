@@ -8,5 +8,9 @@
   "notify_via_sms": "Notify via SMS",
   "notify_via_sms_description": "We will send you an SMS with the payment link.",
   "enter_phone_number": "Enter phone number",
-  "create_payment_link": "Create payment link"
+  "create_payment_link": "Create payment link",
+  "collect_payment_via_razorpay_qr_code": "Collect payment via Razorpay QR code",
+  "razorpay_qr_code_description": "Razorpay QR codes are QR codes that you can display in your facility to collect payments from patients. Patients can scan the QR code with their mobile device using a UPI app, which forwards them to a UPI flow.",
+  "create_qr_code": "Create QR code",
+  "generate_qr_code": "Generate QR code"
 }

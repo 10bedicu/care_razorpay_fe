@@ -1,5 +1,5 @@
-import { Facility } from "./facility";
-import { Patient } from "./patient";
+import { Facility } from "@/types/facility";
+import { Patient } from "@/types/patient";
 
 export type Encounter = {
   id: string;

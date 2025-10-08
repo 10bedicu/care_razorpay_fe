@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sheet";
 
 import { Button } from "@/components/ui/button";
-import { CreatePaymentLinkForm } from "../payment-link/CreatePaymentLinkForm";
+import { CreatePaymentLinkForm } from "@/components/payment-link/CreatePaymentLinkForm";
 import { I18NNAMESPACE } from "@/lib/constants";
 import { Invoice } from "@/types/invoice";
 import { Link2Icon } from "lucide-react";
@@ -29,7 +29,7 @@ export function PaymentLinkSheet({ invoice }: PaymentLinkSheetProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="sm" className="w-full">
+        <Button variant="ghost" size="sm" className="w-full justify-start">
           <Link2Icon className="h-4 w-4" />
           {t("collect_payment_via_razorpay_link")}
         </Button>
