@@ -15,25 +15,29 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { formatCurrency, formatDate } from "@/lib/utils";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { QRCode } from "@/types/qr-code";
 import { apis } from "@/apis";
-import { useQuery } from "@tanstack/react-query";
 
 type ShowQRCodeDialogProps = {
   qrCode: QRCode;
+  invoiceId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
 export function ShowQRCodeDialog({
   qrCode: initialQRCode,
+  invoiceId,
   open,
   onOpenChange,
 }: ShowQRCodeDialogProps) {
+  const queryClient = useQueryClient();
+
   const {
     data: qrCode,
     refetch,
@@ -95,7 +99,12 @@ export function ShowQRCodeDialog({
             <Button
               className="w-full"
               variant="secondary"
-              onClick={() => refetch()}
+              onClick={() => {
+                refetch();
+                queryClient.invalidateQueries({
+                  queryKey: ["payments", invoiceId],
+                });
+              }}
               loading={isFetchingQRCode}
             >
               Verify Payment

@@ -89,6 +89,7 @@ export function QRCodeSheet({
           {currentQRCode && (
             <ShowQRCodeDialog
               qrCode={currentQRCode}
+              invoiceId={invoice.id}
               open={showQRCodeDialog}
               onOpenChange={setShowQRCodeDialog}
             />

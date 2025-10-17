@@ -15,25 +15,29 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { formatCurrency, formatDate } from "@/lib/utils";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PaymentLink } from "@/types/payment_link";
 import { Progress } from "@/components/ui/progress";
 import { apis } from "@/apis";
-import { useQuery } from "@tanstack/react-query";
 
 type ShowPaymentLinkDialogProps = {
   paymentLink: PaymentLink;
+  invoiceId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
 export function ShowPaymentLinkDialog({
   paymentLink: initialPaymentLink,
+  invoiceId,
   open,
   onOpenChange,
 }: ShowPaymentLinkDialogProps) {
+  const queryClient = useQueryClient();
+
   const {
     data: paymentLink,
     refetch,
@@ -89,7 +93,12 @@ export function ShowPaymentLinkDialog({
             <Button
               className="w-full"
               variant="secondary"
-              onClick={() => refetch()}
+              onClick={() => {
+                refetch();
+                queryClient.invalidateQueries({
+                  queryKey: ["payments", invoiceId],
+                });
+              }}
               loading={isFetchingPaymentLink}
             >
               Verify Payment

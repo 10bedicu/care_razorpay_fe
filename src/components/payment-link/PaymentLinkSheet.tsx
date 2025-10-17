@@ -87,6 +87,7 @@ export function PaymentLinkSheet({
           {currentPaymentLink && (
             <ShowPaymentLinkDialog
               paymentLink={currentPaymentLink}
+              invoiceId={invoice.id}
               open={showPaymentLinkDialog}
               onOpenChange={setShowPaymentLinkDialog}
             />
