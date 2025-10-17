@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "vite build --watch & vite preview --port 6173",
+    "start": "vite build --watch & vite preview --port 5173",
     "build": "vite build",
     "preview": "vite preview"
   },

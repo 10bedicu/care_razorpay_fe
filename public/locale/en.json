@@ -12,5 +12,13 @@
   "collect_payment_via_razorpay_qr_code": "Collect payment via Razorpay QR code",
   "razorpay_qr_code_description": "Razorpay QR codes are QR codes that you can display in your facility to collect payments from patients. Patients can scan the QR code with their mobile device using a UPI app, which forwards them to a UPI flow.",
   "create_qr_code": "Create QR code",
-  "generate_qr_code": "Generate QR code"
+  "generate_qr_code": "Generate QR code",
+  "razorpay_account": "Razorpay account",
+  "razorpay_account_id": "Razorpay account ID",
+  "payment_collection_status": "Payment collection status",
+  "enable_payment_collection_through_razorpay": "Enable payment collection through Razorpay",
+  "configure_razorpay_account": "Configure Razorpay account",
+  "configure_razorpay_account_description": "Configure Razorpay account to enable payment collection through Razorpay.",
+  "business_name": "Business name",
+  "contact_email": "Contact email"
 }
