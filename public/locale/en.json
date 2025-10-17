@@ -20,5 +20,7 @@
   "configure_razorpay_account": "Configure Razorpay account",
   "configure_razorpay_account_description": "Configure Razorpay account to enable payment collection through Razorpay.",
   "business_name": "Business name",
-  "contact_email": "Contact email"
+  "contact_email": "Contact email",
+  "razorpay_disabled_reason_no_account": "No Razorpay account linked",
+  "razorpay_disabled_reason_payments_disabled": "Razorpay payments are disabled"
 }

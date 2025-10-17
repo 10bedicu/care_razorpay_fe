@@ -6,6 +6,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { Button } from "@/components/ui/button";
 import { CreateQRCodeForm } from "@/components/qr-code/CreateQRCodeForm";
@@ -19,20 +24,50 @@ import { useTranslation } from "react-i18next";
 
 type QRCodeSheetProps = {
   invoice: Invoice;
+  disabled?: boolean;
+  disabledReason?: string;
 };
 
-export function QRCodeSheet({ invoice }: QRCodeSheetProps) {
+export function QRCodeSheet({
+  invoice,
+  disabled,
+  disabledReason,
+}: QRCodeSheetProps) {
   const { t } = useTranslation(I18NNAMESPACE);
   const [currentQRCode, setCurrentQRCode] = useState<QRCode>();
   const [showQRCodeDialog, setShowQRCodeDialog] = useState(false);
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="sm" className="w-full justify-start">
-          <QrCodeIcon className="h-4 w-4" />
-          {t("collect_payment_via_razorpay_qr_code")}
-        </Button>
+      <SheetTrigger asChild disabled={disabled}>
+        {disabled && disabledReason ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="w-full">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start"
+                  disabled
+                >
+                  <QrCodeIcon className="h-4 w-4" />
+                  {t("collect_payment_via_razorpay_qr_code")}
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>{t(disabledReason)}</TooltipContent>
+          </Tooltip>
+        ) : (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+            disabled={disabled}
+          >
+            <QrCodeIcon className="h-4 w-4" />
+            {t("collect_payment_via_razorpay_qr_code")}
+          </Button>
+        )}
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-md overflow-y-auto">
         <SheetHeader>

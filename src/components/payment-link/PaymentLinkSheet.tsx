@@ -6,6 +6,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { Button } from "@/components/ui/button";
 import { CreatePaymentLinkForm } from "@/components/payment-link/CreatePaymentLinkForm";
@@ -19,20 +24,50 @@ import { useTranslation } from "react-i18next";
 
 type PaymentLinkSheetProps = {
   invoice: Invoice;
+  disabled?: boolean;
+  disabledReason?: string;
 };
 
-export function PaymentLinkSheet({ invoice }: PaymentLinkSheetProps) {
+export function PaymentLinkSheet({
+  invoice,
+  disabled,
+  disabledReason,
+}: PaymentLinkSheetProps) {
   const { t } = useTranslation(I18NNAMESPACE);
   const [currentPaymentLink, setCurrentPaymentLink] = useState<PaymentLink>();
   const [showPaymentLinkDialog, setShowPaymentLinkDialog] = useState(false);
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="sm" className="w-full justify-start">
-          <Link2Icon className="h-4 w-4" />
-          {t("collect_payment_via_razorpay_link")}
-        </Button>
+      <SheetTrigger asChild disabled={disabled}>
+        {disabled && disabledReason ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="w-full">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start"
+                  disabled
+                >
+                  <Link2Icon className="h-4 w-4" />
+                  {t("collect_payment_via_razorpay_link")}
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>{t(disabledReason)}</TooltipContent>
+          </Tooltip>
+        ) : (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+            disabled={disabled}
+          >
+            <Link2Icon className="h-4 w-4" />
+            {t("collect_payment_via_razorpay_link")}
+          </Button>
+        )}
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-md overflow-y-auto">
         <SheetHeader>
