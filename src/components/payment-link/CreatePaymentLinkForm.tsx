@@ -36,9 +36,17 @@ type CreatePaymentLinkFormProps = {
 const formSchema = z
   .object({
     notify_via_email: z.boolean(),
-    email: z.email().optional(),
+    email: z
+      .email({
+        message: "Please enter a valid email address",
+      })
+      .optional(),
     notify_via_sms: z.boolean(),
-    phone_number: z.e164().optional(),
+    phone_number: z
+      .e164({
+        message: "Please enter a valid phone number",
+      })
+      .optional(),
     is_partial_payment_allowed: z.boolean(),
     minimum_down_payment: z.number().optional(),
     expires_at: z.date().optional(),
