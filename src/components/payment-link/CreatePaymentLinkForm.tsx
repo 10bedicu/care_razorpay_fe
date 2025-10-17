@@ -3,6 +3,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { DEFAULT_PAYMENT_LINK_EXPIRY_MS, I18NNAMESPACE } from "@/lib/constants";
 import {
   Form,
   FormControl,
@@ -14,7 +15,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { DateTimePicker } from "@/components/ui/datetime-picker";
-import { I18NNAMESPACE } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
 import { Invoice } from "@/types/invoice";
 import { PaymentLink } from "@/types/payment_link";
@@ -83,7 +83,7 @@ export function CreatePaymentLinkForm({
       phone_number: invoice.account.patient.phone_number,
       is_partial_payment_allowed: false,
       minimum_down_payment: 0,
-      expires_at: undefined,
+      expires_at: new Date(Date.now() + DEFAULT_PAYMENT_LINK_EXPIRY_MS),
     },
   });
 

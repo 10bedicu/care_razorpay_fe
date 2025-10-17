@@ -1,3 +1,4 @@
+import { DEFAULT_QR_CODE_EXPIRY_MS, I18NNAMESPACE } from "@/lib/constants";
 import {
   Form,
   FormControl,
@@ -10,7 +11,6 @@ import { QRCode, QR_CODE_USAGE } from "@/types/qr-code";
 
 import { Button } from "@/components/ui/button";
 import { DateTimePicker } from "@/components/ui/datetime-picker";
-import { I18NNAMESPACE } from "@/lib/constants";
 import { Invoice } from "@/types/invoice";
 import { apis } from "@/apis";
 import { toast } from "sonner";
@@ -52,7 +52,7 @@ export function CreateQRCodeForm({
     defaultValues: {
       usage: "single_use",
       is_amount_fixed: true,
-      closes_at: undefined,
+      closes_at: new Date(Date.now() + DEFAULT_QR_CODE_EXPIRY_MS),
     },
   });
 
