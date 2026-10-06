@@ -1,4 +1,13 @@
 import {
+  QR_CODES_QUERY_KEY,
+  ShowQRCodeDialog,
+} from "@/components/qr-code/ShowQRCodeDialog";
+import {
+  QRCodeView,
+  qrCodeViewFromGateway,
+  qrCodeViewFromRecord,
+} from "@/types/qr-code";
+import {
   Sheet,
   SheetContent,
   SheetDescription,
@@ -11,14 +20,15 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { formatCurrency, formatDate } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import { CreateQRCodeForm } from "@/components/qr-code/CreateQRCodeForm";
 import { I18NNAMESPACE } from "@/lib/constants";
 import { Invoice } from "@/types/invoice";
-import { QRCode } from "@/types/qr-code";
 import { QrCodeIcon } from "lucide-react";
-import { ShowQRCodeDialog } from "@/components/qr-code/ShowQRCodeDialog";
+import { apis } from "@/apis";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -34,11 +44,20 @@ export function QRCodeSheet({
   disabledReason,
 }: QRCodeSheetProps) {
   const { t } = useTranslation(I18NNAMESPACE);
-  const [currentQRCode, setCurrentQRCode] = useState<QRCode>();
+  const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
+  const [currentQRCode, setCurrentQRCode] = useState<QRCodeView>();
   const [showQRCodeDialog, setShowQRCodeDialog] = useState(false);
 
+  const { data: active } = useQuery({
+    queryKey: [QR_CODES_QUERY_KEY, invoice.id],
+    queryFn: () => apis.qr_codes.list(invoice.id, "active"),
+    enabled: open && !!invoice.id,
+  });
+  const activeQRCodes = active?.results ?? [];
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild disabled={disabled}>
         {disabled && disabledReason ? (
           <Tooltip>
@@ -78,10 +97,58 @@ export function QRCodeSheet({
         </SheetHeader>
 
         <div className="mt-8 flex flex-col gap-8">
+          {activeQRCodes.length > 0 && (
+            <div className="flex flex-col gap-2">
+              <h3 className="text-lg font-medium">{t("existing_qr_codes")}</h3>
+              {activeQRCodes.map((record) => (
+                <div
+                  key={record.id}
+                  className="flex items-center justify-between gap-3 rounded-lg border p-3 shadow-sm"
+                >
+                  <div className="min-w-0 text-sm">
+                    <div className="font-medium">
+                      {record.amount
+                        ? formatCurrency(Number(record.amount))
+                        : t("any_amount")}
+                      {Number(record.amount_received) > 0 && (
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          {formatCurrency(Number(record.amount_received))}{" "}
+                          {t("received")}
+                        </span>
+                      )}
+                    </div>
+                    <div className="truncate text-xs text-gray-500">
+                      {record.qr_id}
+                      {record.close_by && (
+                        <>
+                          {" · "}
+                          {t("expires")} {formatDate(record.close_by, true)}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      setCurrentQRCode(qrCodeViewFromRecord(record));
+                      setShowQRCodeDialog(true);
+                    }}
+                  >
+                    {t("view_and_verify")}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+
           <CreateQRCodeForm
             invoice={invoice}
             onSuccess={(qrCode) => {
-              setCurrentQRCode(qrCode);
+              queryClient.invalidateQueries({
+                queryKey: [QR_CODES_QUERY_KEY, invoice.id],
+              });
+              setCurrentQRCode(qrCodeViewFromGateway(qrCode));
               setShowQRCodeDialog(true);
             }}
           />
